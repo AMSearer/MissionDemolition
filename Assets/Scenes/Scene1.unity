@@ -1159,7 +1159,7 @@ MonoBehaviour:
   - {fileID: 4159871552880560488, guid: f9eccddd98cf62140aee8f2fab94f5a0, type: 3}
   - {fileID: 4159871552880560488, guid: ad2a5490f9639a84484e397593165226, type: 3}
   resetScores: 0
-  newBestScores: 20
+  newBestScores: 10
   level: 0
   levelMax: 0
   shotsTaken: 0
