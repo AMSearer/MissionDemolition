@@ -14,9 +14,13 @@ public class MissionDemolition: MonoBehaviour {
     [Header( "Set in Inspector" )]
     public Text                 uitLevel; // The UIText_Level Text
     public Text                 uitShots; // The UIText_Shots Text
+    public Text                 uitBestScore;  // Displays stored best score per level
     public Text                 uitButton; // The Text on UIButton_View
     public Vector3              castlePos; // The place to put castles
     public GameObject[]         castles;   // An array of the castles
+
+    public bool resetScores = false;   // flag to reset stored scores for testing
+    public int newBestScores = 25;  // value to reset stored scores to
 
     [Header( "Set Dynamically" )]
     public int                  level;     // The current level
@@ -26,13 +30,43 @@ public class MissionDemolition: MonoBehaviour {
     public GameMode            mode = GameMode.idle;
     public string               showing = "Show Slingshot" ; // FollowCam mode
 
+    public int[] bestScores;// = new int[castles.Length];  // list of best scores per level
 
+/*     void Awake() {
+        for (int lvl = 0; lvl < castles.Length; lvl++) {
+            if (PlayerPrefs.HasKey("MD_BestScore_Lvl" + lvl)) {
+                bestScores[lvl] = PlayerPrefs.GetInt("MD_BestScore_Lvl" + lvl);
+            }
+            else {
+                PlayerPrefs.SetInt("MD_BestScore_Lvl" + lvl, 25);
+                bestScores[lvl] = 25; // dummy best score for unplayed levels
+            }
+
+        }
+
+    } */
 
     void Start() {
         S = this; // Define the Singleton
 
         level = 0;
         levelMax = castles.Length;
+
+        bestScores = new int[ levelMax ];
+
+        for (int lvl = 0; lvl < castles.Length; lvl++) {
+            if (PlayerPrefs.HasKey("MD_BestScore_Lvl" + lvl)) {
+                if ( resetScores ) {
+                    PlayerPrefs.SetInt("MD_BestScore_Lvl" + lvl, newBestScores);
+                }
+                bestScores[lvl] = PlayerPrefs.GetInt("MD_BestScore_Lvl" + lvl);
+            }
+            else {
+                PlayerPrefs.SetInt("MD_BestScore_Lvl" + lvl, 25);
+                bestScores[lvl] = 25; // dummy best score for unplayed levels
+            }
+
+        }
         StartLevel();
     }
 
@@ -69,6 +103,7 @@ public class MissionDemolition: MonoBehaviour {
         // Show the data in the GUITexts
         uitLevel.text = "Level: " +(level+1 )+ "of " +levelMax;
         uitShots.text = "Shots Taken: " +shotsTaken;
+        uitBestScore.text = "BestScore: " + bestScores[ level ];
     }
 
 
@@ -81,6 +116,12 @@ public class MissionDemolition: MonoBehaviour {
             mode = GameMode.levelEnd;
             // Zoom out
             SwitchView("Show Both" );
+
+            if ( shotsTaken < bestScores[ level ] ) {
+                uitBestScore.text = shotsTaken.ToString();
+                PlayerPrefs.SetInt("MD_BestScore_Lvl" + level, shotsTaken);
+            }
+
             // Start the next level in 2 seconds
             Invoke("NextLevel" ,2f );
         }
