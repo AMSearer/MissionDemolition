@@ -19,6 +19,9 @@ public class MissionDemolition: MonoBehaviour {
     public Vector3              castlePos; // The place to put castles
     public GameObject[]         castles;   // An array of the castles
 
+    public bool resetScores = false;   // flag to reset stored scores for testing
+    public int newBestScores = 25;  // value to reset stored scores to
+
     [Header( "Set Dynamically" )]
     public int                  level;     // The current level
     public int                  levelMax;  // The number of levels
@@ -53,6 +56,9 @@ public class MissionDemolition: MonoBehaviour {
 
         for (int lvl = 0; lvl < castles.Length; lvl++) {
             if (PlayerPrefs.HasKey("MD_BestScore_Lvl" + lvl)) {
+                if ( resetScores ) {
+                    PlayerPrefs.SetInt("MD_BestScore_Lvl" + lvl, newBestScores);
+                }
                 bestScores[lvl] = PlayerPrefs.GetInt("MD_BestScore_Lvl" + lvl);
                 print("For If");
             }
