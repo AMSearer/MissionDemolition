@@ -60,18 +60,14 @@ public class MissionDemolition: MonoBehaviour {
                     PlayerPrefs.SetInt("MD_BestScore_Lvl" + lvl, newBestScores);
                 }
                 bestScores[lvl] = PlayerPrefs.GetInt("MD_BestScore_Lvl" + lvl);
-                print("For If");
             }
             else {
                 PlayerPrefs.SetInt("MD_BestScore_Lvl" + lvl, 25);
                 bestScores[lvl] = 25; // dummy best score for unplayed levels
-                print("For Else");
             }
 
         }
-        print("StartIn");
         StartLevel();
-        print("StartOut");
     }
 
     void StartLevel() {
@@ -120,6 +116,12 @@ public class MissionDemolition: MonoBehaviour {
             mode = GameMode.levelEnd;
             // Zoom out
             SwitchView("Show Both" );
+
+            if ( shotsTaken < bestScores[ level ] ) {
+                uitBestScore.text = shotsTaken.ToString();
+                PlayerPrefs.SetInt("MD_BestScore_Lvl" + level, shotsTaken);
+            }
+
             // Start the next level in 2 seconds
             Invoke("NextLevel" ,2f );
         }
