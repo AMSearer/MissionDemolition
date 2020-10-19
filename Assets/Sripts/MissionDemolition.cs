@@ -14,6 +14,7 @@ public class MissionDemolition: MonoBehaviour {
     [Header( "Set in Inspector" )]
     public Text                 uitLevel; // The UIText_Level Text
     public Text                 uitShots; // The UIText_Shots Text
+    public Text                 uitBestScore;  // Displays stored best score per level
     public Text                 uitButton; // The Text on UIButton_View
     public Vector3              castlePos; // The place to put castles
     public GameObject[]         castles;   // An array of the castles
@@ -26,14 +27,45 @@ public class MissionDemolition: MonoBehaviour {
     public GameMode            mode = GameMode.idle;
     public string               showing = "Show Slingshot" ; // FollowCam mode
 
+    public int[] bestScores;// = new int[castles.Length];  // list of best scores per level
 
+/*     void Awake() {
+        for (int lvl = 0; lvl < castles.Length; lvl++) {
+            if (PlayerPrefs.HasKey("MD_BestScore_Lvl" + lvl)) {
+                bestScores[lvl] = PlayerPrefs.GetInt("MD_BestScore_Lvl" + lvl);
+            }
+            else {
+                PlayerPrefs.SetInt("MD_BestScore_Lvl" + lvl, 25);
+                bestScores[lvl] = 25; // dummy best score for unplayed levels
+            }
+
+        }
+
+    } */
 
     void Start() {
         S = this; // Define the Singleton
 
         level = 0;
         levelMax = castles.Length;
+
+        bestScores = new int[ levelMax ];
+
+        for (int lvl = 0; lvl < castles.Length; lvl++) {
+            if (PlayerPrefs.HasKey("MD_BestScore_Lvl" + lvl)) {
+                bestScores[lvl] = PlayerPrefs.GetInt("MD_BestScore_Lvl" + lvl);
+                print("For If");
+            }
+            else {
+                PlayerPrefs.SetInt("MD_BestScore_Lvl" + lvl, 25);
+                bestScores[lvl] = 25; // dummy best score for unplayed levels
+                print("For Else");
+            }
+
+        }
+        print("StartIn");
         StartLevel();
+        print("StartOut");
     }
 
     void StartLevel() {
@@ -69,6 +101,7 @@ public class MissionDemolition: MonoBehaviour {
         // Show the data in the GUITexts
         uitLevel.text = "Level: " +(level+1 )+ "of " +levelMax;
         uitShots.text = "Shots Taken: " +shotsTaken;
+        uitBestScore.text = "BestScore: " + bestScores[ level ];
     }
 
 
