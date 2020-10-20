@@ -79,7 +79,9 @@ public class MissionDemolition: MonoBehaviour {
         // Destroy old projectiles if they exist
         GameObject[] gos = GameObject.FindGameObjectsWithTag( "Projectile" );
         foreach (GameObject pTemp in gos) {
-            Destroy( pTemp );
+            if (pTemp != null) {
+                Destroy( pTemp );
+            }
         }
 
         // Instantiate the new castle
