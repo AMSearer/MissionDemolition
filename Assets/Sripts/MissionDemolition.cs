@@ -73,20 +73,21 @@ public class MissionDemolition: MonoBehaviour {
     void StartLevel() {
         // Get rid of the old castle if one exists
         if (castle != null ) {
-            Destroy( castle );
+            // Destroy( castle );
+            castle.SetActive(false);
         }
 
         // Destroy old projectiles if they exist
         GameObject[] gos = GameObject.FindGameObjectsWithTag( "Projectile" );
         foreach (GameObject pTemp in gos) {
-            if (pTemp != null) {
-                Destroy( pTemp );
-            }
+            Destroy( pTemp );
+            
         }
 
         // Instantiate the new castle
         castle = Instantiate< GameObject>( castles[level] );
         castle.transform.position = castlePos;
+        castle.SetActive(true);
         shotsTaken = 0 ;
 
         // Reset the camera
