@@ -117,9 +117,11 @@ public class MissionDemolition: MonoBehaviour {
             // Zoom out
             SwitchView("Show Both" );
 
+            // Write to PlayerPrefs
             if ( shotsTaken < bestScores[ level ] ) {
                 uitBestScore.text = shotsTaken.ToString();
                 PlayerPrefs.SetInt("MD_BestScore_Lvl" + level, shotsTaken);
+                bestScores[ level ] = shotsTaken;  // Update for multiple rounds this "play"
             }
 
             // Start the next level in 2 seconds
