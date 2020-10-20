@@ -21,6 +21,7 @@ public class MissionDemolition: MonoBehaviour {
 
     public bool resetScores = false;   // flag to reset stored scores for testing
     public int newBestScores = 25;  // value to reset stored scores to
+    public GameObject[] trajectories = new GameObject[3]; // An array of previous trajectories
 
     [Header( "Set Dynamically" )]
     public int                  level;     // The current level
