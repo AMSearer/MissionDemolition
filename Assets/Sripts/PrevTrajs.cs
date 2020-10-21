@@ -45,14 +45,25 @@ public class PrevTrajs : MonoBehaviour
     // Takes a new line and pushes previous back 1
     public void Push( LineRenderer newLine )
     {
-        
-        Vector3[] newLinePos = new Vector3[ newLine.positionCount ];
-        print("positionCount at puch " + newLine.positionCount);
-        newLine.GetPositions( newLinePos );
-        // int newLineEnd = newLine;
+        Vector3[] tempV3;
+
+        line3Ago.positionCount = line2Ago.positionCount;
+        tempV3 = new Vector3[ line2Ago.positionCount ];
+        line2Ago.GetPositions( tempV3 );
+        line3Ago.SetPositions( tempV3 );
+
+        line2Ago.positionCount = line1Ago.positionCount;
+        tempV3 = new Vector3[ line1Ago.positionCount ];
+        line1Ago.GetPositions( tempV3 );
+        line2Ago.SetPositions( tempV3 );
+
         line1Ago.positionCount = newLine.positionCount;
-        line1Ago.SetPositions(newLinePos);
-        // line1Ago.SetPositions(newLine.GetPositions());
+        tempV3 = new Vector3[ line1Ago.positionCount ];
+        newLine.GetPositions( tempV3 );
+        line1Ago.SetPositions( tempV3 );
+
+        line3Ago.enabled = true;
+        line2Ago.enabled = true;
         line1Ago.enabled = true;
     }
 }
