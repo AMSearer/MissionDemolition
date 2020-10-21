@@ -33,6 +33,9 @@ public class MissionDemolition: MonoBehaviour {
 
     public int[] bestScores;// = new int[castles.Length];  // list of best scores per level
 
+    private LineRenderer currLine;  // Stores, accesses the projectile line for the current shot
+    private GameObject pastLines;  // Object holding up to the past 3 trajectories
+
 /*     void Awake() {
         for (int lvl = 0; lvl < castles.Length; lvl++) {
             if (PlayerPrefs.HasKey("MD_BestScore_Lvl" + lvl)) {
@@ -48,6 +51,12 @@ public class MissionDemolition: MonoBehaviour {
     } */
 
     void Start() {
+
+        // Get the current trajectory from projectile line
+        currLine = GameObject.Find("ProjectileLine").GetComponent<LineRenderer>();
+
+        pastLines = GameObject.Find("PreviousTrajectories");
+
         S = this; // Define the Singleton
 
         level = 0;
@@ -93,6 +102,13 @@ public class MissionDemolition: MonoBehaviour {
 
         // Reset the camera
         SwitchView("wShow Both" );
+
+        // pastLines.PrevTrajs.Push(ProjectileLine);
+
+        // PrevTrajs.S.Push(ProjectileLine.S.line);
+
+        // PrevTrajs.S.Push(ProjectileLine.S.line);
+
         ProjectileLine.S.Clear();
 
         // Reset the goal
@@ -169,6 +185,7 @@ public class MissionDemolition: MonoBehaviour {
 
         // Static method that allows code anywhere to increment shotsTaken
         public static void ShotFired() {                                        // d
-      S.shotsTaken++;
+            S.shotsTaken++;
+            PrevTrajs.S.Push(ProjectileLine.S.line);
     }
 }
