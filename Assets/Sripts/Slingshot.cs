@@ -98,6 +98,8 @@ public class Slingshot : MonoBehaviour
         rightSling.SetPosition(0, rightArm.transform.position);
         rightSling.SetPosition(1, projectile.transform.position);
 
+        rightSling.enabled = true;
+
         if ( Input.GetMouseButtonUp(0) ) {
             // The mouse has been released
             aimingMode = false;
@@ -110,7 +112,7 @@ public class Slingshot : MonoBehaviour
 
             leftSling.SetPosition(0, leftArm.transform.position);
             leftSling.SetPosition(1, rightArm.transform.position);
-             leftSling.enabled = true;
+            leftSling.enabled = true;
 
             rightSling.enabled = false; 
         }
