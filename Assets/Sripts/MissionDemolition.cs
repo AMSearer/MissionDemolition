@@ -133,7 +133,7 @@ public class MissionDemolition: MonoBehaviour {
         // Check for level end
         if ( (mode == GameMode.playing) && Goal.goalMet ) {
             // Change mode to stop checking for level end
-            print("LevelEnd");
+            // print("LevelEnd");
             mode = GameMode.levelEnd;
             // Zoom out
             SwitchView("Show Both" );
