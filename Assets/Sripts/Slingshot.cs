@@ -15,6 +15,10 @@ public class Slingshot : MonoBehaviour
     public Vector3       launchPos;
     public GameObject      projectile;
     public bool aimingMode; 
+    private GameObject leftArm;
+    private GameObject rightArm;
+    private LineRenderer leftSling;
+    private LineRenderer rightSling;
     private Rigidbody projectileRigidbody; 
 
     static public Vector3 LAUNCH_POS {
@@ -29,7 +33,18 @@ public class Slingshot : MonoBehaviour
         Transform launchPointTrans = transform.Find("LaunchPoint");
         launchPoint = launchPointTrans.gameObject;
         launchPoint.SetActive( false );
-        launchPos = launchPointTrans.position;     
+        launchPos = launchPointTrans.position;  
+
+        leftArm =  GameObject.Find("LeftArm");
+        rightArm =  GameObject.Find("RightArm");
+        leftSling = leftArm.GetComponent<LineRenderer>();
+        rightSling = rightArm.GetComponent<LineRenderer>();   
+
+        leftSling.SetPosition(0, leftArm.transform.position);
+        leftSling.SetPosition(1, rightArm.transform.position);
+        leftSling.enabled = true;
+
+        rightSling.enabled = false;   
     }
     void OnMouseEnter() {
         // print("Slingshot:OnMouseEnter()");
