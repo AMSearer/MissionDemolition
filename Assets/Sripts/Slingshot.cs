@@ -93,6 +93,11 @@ public class Slingshot : MonoBehaviour
         Vector3 projPos = launchPos + mouseDelta;
         projectile.transform.position = projPos;
 
+        leftSling.SetPosition(0, leftArm.transform.position);
+        leftSling.SetPosition(1, projectile.transform.position);
+        rightSling.SetPosition(0, rightArm.transform.position);
+        rightSling.SetPosition(1, projectile.transform.position);
+
         if ( Input.GetMouseButtonUp(0) ) {
             // The mouse has been released
             aimingMode = false;
@@ -102,6 +107,12 @@ public class Slingshot : MonoBehaviour
             projectile = null;
             MissionDemolition.ShotFired();
             ProjectileLine.S.poi = projectile; 
+
+            leftSling.SetPosition(0, leftArm.transform.position);
+            leftSling.SetPosition(1, rightArm.transform.position);
+             leftSling.enabled = true;
+
+            rightSling.enabled = false; 
         }
     }
 }
